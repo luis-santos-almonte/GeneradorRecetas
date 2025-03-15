@@ -1,5 +1,7 @@
 from tkinter import Button, Label, Entry, messagebox, Text
 from lib.classes import patient, prescription
+from lib.functions.generate_pdf import generate_pdf
+from lib.reports.base_prescription import get_base_prescription
 from lib.views import prescription_add_view
 
 class App:
@@ -26,7 +28,7 @@ class App:
         self.boton_agregar = Button(self.root, text="Agregar", command=self.open_prescription_add)
         self.boton_agregar.grid(row=4, column=1, columnspan=2, pady=10)
         
-        self.boton_agregar = Button(self.root, text="Imprimir")
+        self.boton_agregar = Button(self.root, text="Imprimir", command=self.print_prescription)
         self.boton_agregar.grid(row=4, column=2, columnspan=2, pady=10)
         
         self.text_prescription = Text(self.root, height=15, width=50, state="disabled")
@@ -45,3 +47,9 @@ class App:
         self.text_prescription.delete("1.0", "end")
         self.text_prescription.insert("end", str(self.pres))
         self.text_prescription.config(state="disabled")
+        
+    def print_prescription(self):
+        pat = patient.patient(self.entry_name.get(), self.entry_lastname.get(), int(self.entry_age.get()))
+        report = get_base_prescription(pat, self.pres)
+        
+        generate_pdf(report, "reporte1.pdf")
