@@ -1,3 +1,4 @@
+import asyncio
 from tkinter import Button, Label, Entry, messagebox, Text
 from lib.classes import patient, prescription
 from lib.functions.generate_pdf import generate_pdf

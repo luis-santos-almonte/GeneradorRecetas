@@ -1,20 +1,11 @@
 from tkinter import messagebox, Text
-import pdfkit
+from playwright.sync_api import sync_playwright
 
-options = {
-    'page-size': 'A4',
-    'margin-top': '0mm',
-    'margin-right': '0mm',
-    'margin-bottom': '0mm',
-    'margin-left': '0mm',
-    'encoding': 'UTF-8',
-    'no-outline': None
-}
-
-def generate_pdf(html_content: str, pdf_name: str):
-    try:
-        pdfkit.from_string(html_content, pdf_name, options=options)
+def generate_pdf(html_content: str, pdf_name: str, file_size: str = "A4") -> None:
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)
+        page = browser.new_page()
+        page.set_content(html_content)
+        page.pdf(path=pdf_name, format=file_size)
+        browser.close()
         print("PDF generado: {pdf_name}") 
-            
-    except Exception as e:
-        messagebox.showerror("Error", f"Error al generar el PDF: {e}")
