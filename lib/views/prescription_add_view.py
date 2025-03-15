@@ -1,5 +1,5 @@
 from tkinter import Tk, Label, Button, Entry, messagebox, Toplevel
-from lib.classes.prescription import prescription
+from lib.classes.prescription import treatment
 
 class prescription_add_view: 
     def __init__(self, root, callback):
@@ -7,8 +7,8 @@ class prescription_add_view:
         self.callback = callback
         
         self.view = Toplevel(self.root)
-        self.view("Agregar a receta")
-        self.view("400x200")
+        self.view.title("Agregar a receta")
+        self.root.geometry("800x600")
         self.view.resizable(False, False)
         
         Label(self.view, text="Descripcion:").grid(row=0, column=0, padx=10, pady=10)
@@ -30,3 +30,19 @@ class prescription_add_view:
     def validate_entries(self):
         if not self.entry_description.get() or not self.entry_usage.get() or not self.entry_quantity.get():
             messagebox.showwarning("Error", "Todos los campos son obligatorios")
+        else:
+            self.save_treatment()
+            
+    def save_treatment(self):
+        description = self.entry_description.get()
+        usage = self.entry_usage.get()
+        quantity = self.entry_quantity.get()
+        
+        try:
+            quantity = int(quantity)
+            
+            treat = treatment(description, usage, quantity)
+            self.callback(treat)
+            self.view.destroy()
+        except ValueError:
+            messagebox.showwarning("Error", "La cantidad debe ser un número entero")
