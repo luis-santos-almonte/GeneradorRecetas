@@ -8,4 +8,3 @@ def generate_pdf(html_content: str, pdf_name: str, file_size: str = "A4") -> Non
         page.set_content(html_content)
         page.pdf(path=pdf_name, format=file_size)
         browser.close()
-        print("PDF generado: {pdf_name}") 
