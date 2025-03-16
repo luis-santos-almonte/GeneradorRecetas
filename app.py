@@ -54,6 +54,6 @@ class App:
         pat = patient.patient(self.entry_name.get(), self.entry_lastname.get(), int(self.entry_age.get()))
         report = get_base_prescription(pat, self.pres)
         set_date = f"{datetime.date(datetime.now())}"
-        report_name = f"{pat.name}_{pat.lastname}_{set_date}.pdf"
+        report_name = f"{pat.name} {pat.lastname}-{set_date}.pdf"
         
         generate_pdf(report, report_name)

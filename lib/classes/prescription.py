@@ -13,3 +13,6 @@ class prescription:
 
     def __str__(self) -> str:
         return "\n".join([f"{treatment.description} - {treatment.usage} - {treatment.quantity}" for treatment in self.treatments])
+    
+    def html_list(self) -> str:
+        return "\n".join([f"<tr> <th>{treatment.description}</th> <th>{treatment.usage}</th> <th>{treatment.quantity}</th> </th>" for treatment in self.treatments])
