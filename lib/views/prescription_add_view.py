@@ -1,7 +1,7 @@
 from tkinter import Tk, Label, Button, Entry, messagebox, Toplevel
-from lib.classes.prescription import treatment
+from lib.classes.prescription import Treatment
 
-class prescription_add_view: 
+class PrescriptionAddView: 
     def __init__(self, root, callback):
         self.root = root
         self.callback = callback
@@ -41,8 +41,8 @@ class prescription_add_view:
         try:
             quantity = int(quantity)
             
-            treat = treatment(description, usage, quantity)
-            self.callback(treat)
+            treatment = Treatment(description, usage, quantity)
+            self.callback(treatment)
             self.view.destroy()
         except ValueError:
             messagebox.showwarning("Error", "La cantidad debe ser un número entero")

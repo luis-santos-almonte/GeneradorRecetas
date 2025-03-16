@@ -1,4 +1,3 @@
-from tkinter import messagebox, Text
 from playwright.sync_api import sync_playwright
 
 def generate_pdf(html_content: str, pdf_name: str, file_size: str = "A4") -> None:

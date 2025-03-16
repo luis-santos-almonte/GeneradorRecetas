@@ -1,9 +1,9 @@
-import asyncio
-from tkinter import Button, Label, Entry, messagebox, Text
-from lib.classes import patient, prescription
+from tkinter import Button, Label, Entry, Text
+from lib.classes.patient import Patient
+from lib.classes.prescription import Prescription
 from lib.functions.generate_pdf import generate_pdf
 from lib.reports.base_prescription import get_base_prescription
-from lib.views import prescription_add_view
+from lib.views.prescription_add_view import PrescriptionAddView
 from datetime import datetime
 
 class App:
@@ -13,7 +13,7 @@ class App:
         self.root.geometry("800x600")
         self.root.resizable(False, False)
         
-        self.pres = prescription.prescription()
+        self.pres = Prescription()
         
         Label(self.root, text="Nombre:").grid(row=0, column=0, padx=10, pady=10)
         self.entry_name = Entry(self.root, width=50)
@@ -37,7 +37,7 @@ class App:
         self.text_prescription.grid(row=6, column=1, pady=10)
         
     def open_prescription_add(self):
-        view = prescription_add_view.prescription_add_view(self.root, self.add_prescription)
+        view = PrescriptionAddView(self.root, self.add_prescription)
         
     def add_prescription(self, prescription):
         self.pres.add_treatment(prescription)
@@ -51,7 +51,7 @@ class App:
         self.text_prescription.config(state="disabled")
         
     def print_prescription(self):
-        pat = patient.patient(self.entry_name.get(), self.entry_lastname.get(), int(self.entry_age.get()))
+        pat = Patient(self.entry_name.get(), self.entry_lastname.get(), int(self.entry_age.get()))
         report = get_base_prescription(pat, self.pres)
         set_date = f"{datetime.date(datetime.now())}"
         report_name = f"{pat.name} {pat.lastname}-{set_date}.pdf"

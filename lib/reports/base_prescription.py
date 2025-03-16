@@ -1,11 +1,10 @@
-from lib.classes.prescription import prescription
-from lib.classes.patient import patient
+from lib.classes.prescription import Prescription
+from lib.classes.patient import Patient
 
-def get_base_prescription(pat: patient, pres: prescription) -> str:
+def get_base_prescription(pat: Patient, pres: Prescription) -> str:
     patient_name = pat.get_fullname()
     patient_age = pat.get_age()
     patient_prescription = pres.html_list()
-    
     base_prescription = """
 <!DOCTYPE html>
 <html>
